@@ -18,7 +18,7 @@ steps:
   displayName: 'Docker selenoid UI'
 - script: docker pull selenoid/vnc_chrome:120.0
   displayName: 'Docker selenoid vnc'
-- script: docker run -d --name selenoid -p 4444:4444 -v /var/run/docker.sock:/var/run/docker.sock
+- script: docker run --name selenoid -p 4444:4444 -v /var/run/docker.sock:/var/run/docker.sock
     -v $PWD/config/:/etc/selenoid/:ro aerokube/selenoid
 
 - script: curl http://localhost:4444/status
