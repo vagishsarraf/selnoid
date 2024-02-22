@@ -10,14 +10,17 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: docker -v
-- task: DockerCompose@0
-  inputs:
-    containerregistrytype: 'Container Registry'
-    dockerRegistryEndpoint: 'dockers'
-    dockerComposeFile: '**/docker-compose.yml'
-    action: 'Run a Docker Compose command'
-    dockerComposeCommand: 'docker compose up -d'
+- script: docker pull aerokube/selenoid:latest
+  displayName: 'Docker selenoid'
+- script: docker pull aerokube/cm:latest
+  displayName: 'Docker cm'
+- script: docker pull aerokube/selenoid-ui:latest
+  displayName: 'Docker selenoid UI'
+- script: docker pull selenoid/vnc_chrome:120.0
+  displayName: 'Docker selenoid vnc'
+- script: docker run -d --name selenoid -p 4444:4444 -v /var/run/docker.sock:/var/run/docker.sock
+    -v $PWD/config/:/etc/selenoid/:ro aerokube/selenoid
+
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
