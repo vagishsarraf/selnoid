@@ -16,7 +16,7 @@ steps:
     dockerRegistryEndpoint: 'dockers'
     dockerComposeFile: '**/docker-compose.yml'
     action: 'Run a Docker Compose command'
-    dockerComposeCommand: 'docker-compose up'
+    dockerComposeCommand: 'docker compose up -d'
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
