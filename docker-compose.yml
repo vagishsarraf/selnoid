@@ -17,6 +17,12 @@ services:
     environment:
       - "OVERRIDE_VIDEO_OUTPUT_DIR=$PWD/target"
     command: ["-conf", "/etc/selenoid/browsers.json", "-video-output-dir", "/opt/selenoid/video", "-container-network", "selenoid"]
+  selenoid_cm:
+    image: "aerokube/cm"
+    container_name: selenoidCM
+    networks:
+      - selenoid
+    command: [ "selenoid", "start" ]
   selenoid-ui:
     image: "aerokube/selenoid-ui:latest"
     container_name: selenoid-ui
@@ -26,7 +32,7 @@ services:
       - "8083:8080"
     networks:
       - selenoid
-    command: ["--selenoid-uri", "http://localhost:4040"]
+    command: ["--selenoid-uri", "http://localhost:4444"]
   chrome_120.0:
     image: "selenoid/vnc:chrome_120.0"
     container_name: chrome_120.0
