@@ -1,0 +1,30 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: docker pull aerokube/selenoid:latest
+  displayName: 'Docker selenoid'
+- script: docker pull aerokube/cm:latest
+  displayName: 'Docker cm'
+- script: docker pull aerokube/selenoid-ui:latest
+  displayName: 'Docker selenoid UI'
+- script: docker pull selenoid/vnc_chrome:120.0
+  displayName: 'Docker selenoid vnc'
+- script: docker run --name selenoid -p 4444:4444 -v /var/run/docker.sock:/var/run/docker.sock
+    -v $PWD/config/:/etc/selenoid/:ro aerokube/selenoid
+
+- script: curl http://localhost:4444/status
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
