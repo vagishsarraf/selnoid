@@ -11,5 +11,10 @@ pipeline {
                      sh 'curl http://localhost:8083/#/'
                      }
              }
+     stage('Stop docker containers'){
+     steps{
+     sh 'docker stop $(docker ps -a -q)'
+     }
+     }
           }
 }
