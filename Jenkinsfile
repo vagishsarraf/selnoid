@@ -9,6 +9,7 @@ pipeline {
      stage('Verifying Grid') {
                  steps {
                      sh 'curl http://localhost:8083/#/'
+                     }
              }
           }
 }
